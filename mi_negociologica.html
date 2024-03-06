@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <title>Price Maker Template</title>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="">
+     <meta name="author" content="Tooplate">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+     <link rel="stylesheet" href="css/font-awesome.min.css">
+     <link rel="stylesheet" href="css/animate.css">
+     <link rel="stylesheet" href="css/owl.carousel.css">
+     <link rel="stylesheet" href="css/owl.theme.default.min.css">
+     <link rel="stylesheet" href="css/tooplate-style.css">
+     <style>
+        /* Estilo de la tabla con bordes */
+        .excel-table {
+             width: 100%;
+             border-collapse: collapse;
+             margin-bottom: 20px;
+        }
+        .excel-table th, .excel-table td {
+             border: 1px solid #ccc;
+             padding: 10px;
+             text-align: left;
+        }
+         /* Estilo de las columnas para ocultar */
+        .hidden-column {
+            display: none;
+        }
+
+        /* Estilo del botón "Guardar" */
+        .excel-button {
+            padding: 10px 20px;
+             font-size: 16px;
+             background-color: #4CAF50;
+             color: white;
+             border: none;
+             cursor: pointer;
+        }
+        /* Estilo del botón "Agregar Fila" */
+        #agregarFila {
+             padding: 10px 20px;
+             font-size: 16px;
+             background-color: #4CAF50;
+             color: white;
+             border: none;
+             cursor: pointer;
+        }
+        #agregarFila:hover {
+             background-color: #45a049;
+        }
+
+        /* Estilo de las listas desplegables */
+        .excel-dropdown {
+             display: inline-block;
+             margin-right: 10px;
+        }
+   </style>
+</head>
+<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+     <!-- PRE LOADER -->
+     <section class="preloader">
+          <div class="spinner">
+               <span class="spinner-rotate"></span>
+          </div>
+     </section>
+
+     <!-- HEADER -->
+     <header>
+          <div class="container">
+               <div class="row">
+                    <div class="col-md-4 col-sm-5">
+                         <p>Bienvenido a Price Maker</p>
+                    </div>
+                    <div class="col-md-8 col-sm-7 text-align-right">
+                         <span class="phone-icon"><i class="fa fa-phone"></i> 351-2334455</span>
+                         <span class="email-icon"><i class="fa fa-envelope-o"></i> <a href="#">info@pricemaker.com</a></span>
+                    </div>
+               </div>
+          </div>
+     </header>
+    
+     <!-- MENÚ -->
+     <section class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header"></div>
+
+            <!-- MENU LINKS -->
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-left"></ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="pricemaker.html#home" class="smoothScroll">Inicio</a></li>
+                    <li><a href="pricemaker.html#about" class="smoothScroll">Nosotros</a></li>
+                    <li class="dropdown"> <!-- Modificación: Agregamos la clase "dropdown" -->
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mi Negocio <span class="caret"></span></a>
+                        <ul class="dropdown-menu"> <!-- Modificación: Agregamos la clase "dropdown-menu" -->
+                            <li><a href="mi_negocio.html#mis_gastos">Mis Gastos</a></li>
+                            <li><a href="mi_negocio.html#mis_productos">Mis Productos</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="pricemaker.html#google-map" class="smoothScroll">Contacto</a></li>
+                    <li id="sesionBtn" class="appointment-btn"><a href="#" onclick="cerrarSesion()">Cerrar Sesión</a></li>
+                </ul>
+            </div>
+        </div>
+     </section>
+
+     <!-- HOME -->
+     <section id="negocio" data-stellar-background-ratio="1">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="about-info">
+                        <h2 class="wow fadeInUp" data-wow-delay="0.1s">Mis Gastos</h2>
+                    </div>
+                </div>
+            </div>
+
+            <section id="mis_gastos">
+                <div class="container" style="max-width: 50%; text-align: left;">
+                    <table class="excel-table">
+                        <thead>
+                            <tr>
+                                <th>Descripción</th>
+                                <th>Precio</th>
+                            </tr>
+                        </thead>
+                        <tbody id="mis_gastos_table">
+                            <!-- Filas para cada producto, con celdas editables -->
+                            <tr>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true" id="precio1" oninput="validarNumerosYComas(this)"></td>
+                            </tr>
+                            <!-- Puedes agregar más filas como la anterior para más productos -->
+                            <script>
+                                for (let i = 0; i < 9; i++) {
+                                    document.querySelector('#mis_gastos_table').innerHTML += `
+                                    <tr>
+                                        <td contenteditable="true"></td>
+                                        <td contenteditable="true" oninput="validarNumerosYComas(this)"></td>
+                                    </tr>`;
+                                }
+                            </script>
+                        </tbody>
+                    </table>
+
+                    <!-- Contenedor del total -->
+                    <div id="totalContainer">
+                        Mis gastos fijos mensuales son: <span id="total">$0.00</span>
+                    </div>
+                    <button id="agregarFilaGastos" class="excel-button">Agregar Fila</button>
+                    <button id="guardarGastos" class="excel-button">Guardar en Mis Gastos</button>
+                </div>
+            </section>
+        </div>
+     </section>
+
+     <!-- Sección de Mis Productos -->
+     <section id="mis_productos">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="about-info">
+                        <h2 class="wow fadeInUp" data-wow-delay="0.1s">Mis Productos</h2>
+                    </div>
+                         <!-- Listas desplegables -->
+                         <div class="excel-dropdown">
+                              <label for="rubro">Rubro:</label>
+                              <select id="rubro" name="rubro">
+                                   <option value="Servicios">Servicios</option>
+                                   <option value="Productos">Productos</option>
+                              </select>
+                         </div>
+
+                         <div class="excel-dropdown">
+                              <label for="fabricacion">Fabricación:</label>
+                              <select id="fabricacion" name="fabricacion">
+                                   <option value="Propia">Propia</option>
+                                   <option value="Revendedor">Revendedor</option>
+                              </select>
+                         </div>
+
+                         <table class="excel-table" id="mis_productos_table">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Producto</th>
+                                        <th>Cantidad</th>
+                                        <th>Valor de Compra</th>
+                                        <th>Margen % (Sin costos fijos)</th>
+                                        <th>Costo MP + Margen</th>
+                                        <th>Porcentaje MP</th>
+                                        <th>Gastos fijos prorrateados</th>
+                                        <th>Precio Final sugerido</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td contenteditable="true"></td>   
+                                    <td contenteditable="true"></td>
+                                    <td contenteditable="true" oninput="validarNumerosYComas(this)"></td>
+                                    <td contenteditable="true" oninput="validarNumerosYComas(this)"></td>
+                                    <td contenteditable="true" oninput="validarNumerosYComas(this)"></td>
+                                    <td contenteditable="false"></td>
+                                    <td contenteditable="false"></td>
+                                    <td contenteditable="false"></td>
+                                    <td contenteditable="false"></td>
+                                </tr>
+                                <!-- Puedes agregar más filas como la anterior para más productos -->
+                                <script>
+                                    for (let i = 0; i < 9; i++) {
+                                        document.querySelector('#mis_productos_table tbody').innerHTML += `
+                                            <tr>
+                                                <td contenteditable="true"></td>
+                                                <td contenteditable="true"></td>
+                                                <td contenteditable="true" oninput="validarNumerosYComas(this)"></td>
+                                                <td contenteditable="true" oninput="validarNumerosYComas(this)"></td>
+                                                <td contenteditable="true" oninput="validarNumerosYComas(this)"></td>
+                                                <td contenteditable="false"></td>
+                                                <td contenteditable="false"></td>
+                                                <td contenteditable="false"></td>
+                                                <td contenteditable="false"></td>
+                                                
+                                                
+                                            </tr>`;
+                                    }
+                                </script>
+                            </tbody>
+                            </table>
+                            
+                            <div id="totalCostoMPMargenContainer" style="border: 1px solid #ccc; padding: 10px;">
+                                Total "Costo MP + Margen": <span id="totalCostoMPMargen" style="border: 1px solid #ccc; padding: 5px;">$0.00</span>
+                            </div>
+                        <button id="agregarFilaProductos" class="excel-button">Agregar Fila</button>
+                        <button id="guardarProductos" class="excel-button">Guardar</button>
+                        <button id="calcular" class="excel-button" onclick="calcularResultados()">Calcular</button>
+                    </div>
+                </div>
+          </div>
+     </section>
+
+<!-- SCRIPTS -->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.sticky.js"></script>
+<script src="js/jquery.stellar.min.js"></script>
+<script src="js/wow.min.js"></script>
+<script src="js/smoothscroll.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/custom.js"></script>
+
+<script>
+    function cerrarSesion() {
+    // Eliminar el token del localStorage u realizar otras tareas necesarias para cerrar sesión
+    localStorage.removeItem('token');
+    // Redirigir a la página de inicio de sesión
+    window.location.href = 'iniciosesion.html';
+    }
+
+        const token = localStorage.getItem('token');
+
+    // Verificar si el token no está presente
+    if (!token) {
+        // Redirigir a la página de inicio de sesión
+        window.location.href = 'iniciosesion.html';
+    }
+
+    //TABLA MIS GASTOS
+    // JavaScript para agregar fila y actualizar total en Mis Gastos
+    function agregarFilaGastos() {
+        var table = document.querySelector('#mis_gastos_table');
+        var newRow = table.insertRow(table.rows.length);
+        for (var i = 0; i < 2; i++) {
+            var cell = newRow.insertCell(i);
+            cell.setAttribute('contenteditable', 'true');
+            if (i === 1) {
+                cell.setAttribute('oninput', 'validarNumerosYComas(this); actualizarTotal()');
+            }
+        }
+    }
+
+    // Función para validar que solo se ingresen números y comas
+    function validarNumerosYComas(input) {
+        var regex = /^[0-9,]*$/;
+        if (!regex.test(input.textContent)) {
+            input.textContent = input.textContent.replace(/[^0-9,]/g, '');
+        }
+        // Después de validar, actualiza el total
+        actualizarTotal();
+    }
+
+    function actualizarTotal() {
+        var precios = document.querySelectorAll('#mis_gastos_table td:nth-child(2)');
+        var total = 0;
+
+        precios.forEach(function (precio) {
+            var precioValor = parseFloat(precio.textContent.replace(',', '.')) || 0;
+            total += precioValor;
+        });
+        document.getElementById('total').textContent = '$' + total.toFixed(2);
+    }
+
+    // Llamada a la función para calcular y mostrar el total en Mis Gastos
+    document.getElementById('agregarFilaGastos').addEventListener('click', agregarFilaGastos);
+
+    // Llamada a la función para guardar en Mis Gastos
+    document.getElementById('guardarGastos').addEventListener('click', function () {
+        // Aquí puedes implementar la lógica para guardar los datos
+        // Puedes obtener los datos de las celdas usando DOM y enviarlos a tu servidor
+
+        // Calcular el total de la columna de precios
+        var total = calcularTotalPrecios();
+
+        // Mostrar el total en el recuadro
+        document.getElementById('total').textContent = '$' + total;
+    });
+
+    //TABLA PRODUCTOS
+    //FUNCIONA OK
+    function agregarFilaProductos() {  
+    var table = document.querySelector('#mis_productos_table tbody');
+    var newRow = table.insertRow(table.rows.length);
+
+    var cells = newRow.insertCell(-1);
+    cells.outerHTML = '<td contenteditable="true"></td>';
+    cells = newRow.insertCell(-1);
+    cells.outerHTML = '<td contenteditable="true"></td>';
+    cells = newRow.insertCell(-1);
+    cells.outerHTML = '<td contenteditable="true" oninput="validarNumerosYComas(this);"></td>';
+    cells = newRow.insertCell(-1);
+    cells.outerHTML = '<td contenteditable="true" oninput="validarNumerosYComas(this);"></td>';
+    cells = newRow.insertCell(-1);
+    cells.outerHTML = '<td contenteditable="true" oninput="validarNumerosYComas(this);"></td>';
+    cells = newRow.insertCell(-1);
+    cells.outerHTML = '<td contenteditable="false"></td>';
+    cells = newRow.insertCell(-1);
+    cells.outerHTML = '<td contenteditable="false"></td>';
+    cells = newRow.insertCell(-1);
+    cells.outerHTML = '<td contenteditable="false"></td>';
+    cells = newRow.insertCell(-1);
+    cells.outerHTML = '<td contenteditable="false"></td>';
+}
+
+// Agregar un controlador de eventos para el botón "Agregar Fila"
+//FUNCIONA OK 
+document.getElementById('agregarFilaProductos').addEventListener('click', agregarFilaProductos);
+
+
+    function calcularResultados() {
+        var totalCostoMPMargen = parseFloat(document.getElementById('totalCostoMPMargen').textContent.replace('$', '')) || 0;
+        var filas = document.querySelectorAll('#mis_productos_table tbody tr');
+        filas.forEach(function (fila) {
+            var valorCompra = parseFloat(fila.children[3].textContent.replace(',', '.')) || 0;
+            var cantidad = parseFloat(fila.children[2].textContent.replace(',', '.')) || 0;
+            var margenPorcentaje = parseFloat(fila.children[4].textContent.replace(',', '.')) || 0;
+
+            // 1. Calcular "Costo MP + Margen"
+            var costoMPMargen = valorCompra * cantidad * (1 + margenPorcentaje / 100);
+            fila.children[5].textContent = costoMPMargen.toFixed(2);
+
+            // 2. Calcular "Porcentaje MP"
+            var porcentajeMP = costoMPMargen / totalCostoMPMargen;
+            fila.children[6].textContent = (porcentajeMP * 100).toFixed(2) + '%';
+
+            // 3. Calcular "Gastos fijos prorrateados"
+            var gastosFijosProrrateados = porcentajeMP * parseFloat(document.getElementById('total').textContent.replace('$', ''));
+            fila.children[7].textContent = '$' + gastosFijosProrrateados.toFixed(2);
+
+            // 4. Calcular "Precio Final sugerido"
+            var precioFinalSugerido = (gastosFijosProrrateados + costoMPMargen) / cantidad;
+            fila.children[8].textContent = '$' + precioFinalSugerido.toFixed(2);
+        
+        });
+
+        // Llamada a la función para actualizar el "Total Costo MP + Margen"
+        actualizarTotalCostoMPMargen();
+    }
+
+    function actualizarTotalCostoMPMargen() {
+        var filas = document.querySelectorAll('#mis_productos_table tbody tr');
+        var totalCostoMPMargen = 0;
+
+        filas.forEach(function (fila) {
+            var costoMPMargen = parseFloat(fila.children[5].textContent.replace(',', '.')) || 0;
+            totalCostoMPMargen += costoMPMargen;
+        });
+
+        // Actualiza el total al final de la tabla
+        document.getElementById('totalCostoMPMargen').textContent = '$' + totalCostoMPMargen.toFixed(2);
+    
+        // Calcular el porcentaje de Materia Prima (MP)
+        var costoMP = parseFloat(document.getElementById('costoMP').textContent.replace('$', ''));
+        var porcentajeMP = (costoMP / totalCostoMPMargen) * 100;
+
+        // Actualizar el porcentaje de Materia Prima (MP)
+        var porcentajeMPContainer = document.getElementById('porcentajeMP');
+        porcentajeMPContainer.textContent = porcentajeMP.toFixed(2) + '%';
+    }
+
+    // Llamada a la función para calcular y mostrar el total de "Costo MP + Margen"
+    actualizarTotalCostoMPMargen();
+</script>
+
+
+     </script>
+</body>
+</html>

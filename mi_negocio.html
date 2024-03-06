@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <title>Price Maker Template</title>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="">
+     <meta name="author" content="Tooplate">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+     <link rel="stylesheet" href="css/font-awesome.min.css">
+     <link rel="stylesheet" href="css/animate.css">
+     <link rel="stylesheet" href="css/owl.carousel.css">
+     <link rel="stylesheet" href="css/owl.theme.default.min.css">
+     <link rel="stylesheet" href="css/tooplate-style.css">
+     <style>
+        /* Estilo de la tabla con bordes */
+        .excel-table {
+             width: 100%;
+             border-collapse: collapse;
+             margin-bottom: 20px;
+        }
+        .excel-table th, .excel-table td {
+             border: 1px solid #ccc;
+             padding: 10px;
+             text-align: left;
+        }
+         /* Estilo de las columnas para ocultar */
+        .hidden-column {
+            display: none;
+        }
+        /* Estilo de las columnas para ocultar */
+        .hidden-column {
+        display: none;
+    }
+
+        /* Estilo del botón "Guardar" */
+        .excel-button {
+            padding: 10px 20px;
+             font-size: 16px;
+             background-color: #4CAF50;
+             color: white;
+             border: none;
+             cursor: pointer;
+        }
+        /* Estilo del botón "Agregar Fila" */
+        #agregarFila {
+             padding: 10px 20px;
+             font-size: 16px;
+             background-color: #4CAF50;
+             color: white;
+             border: none;
+             cursor: pointer;
+        }
+        #agregarFila:hover {
+             background-color: #45a049;
+        }
+
+        /* Estilo de las listas desplegables */
+        .excel-dropdown {
+             display: inline-block;
+             margin-right: 10px;
+        }
+   </style>
+</head>
+<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+     <!-- PRE LOADER -->
+     <section class="preloader">
+          <div class="spinner">
+               <span class="spinner-rotate"></span>
+          </div>
+     </section>
+
+     <!-- HEADER -->
+     <header>
+          <div class="container">
+               <div class="row">
+                    <div class="col-md-4 col-sm-5">
+                         <p>Bienvenido a Price Maker</p>
+                    </div>
+                    <div class="col-md-8 col-sm-7 text-align-right">
+                         <span class="phone-icon"><i class="fa fa-phone"></i> 351-2334455</span>
+                         <span class="email-icon"><i class="fa fa-envelope-o"></i> <a href="#">info@pricemaker.com</a></span>
+                    </div>
+               </div>
+          </div>
+     </header>
+    
+     <!-- MENÚ -->
+     <section class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header"></div>
+
+            <!-- MENU LINKS -->
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-left"></ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="pricemaker.html#home" class="smoothScroll">Inicio</a></li>
+                    <li><a href="pricemaker.html#about" class="smoothScroll">Nosotros</a></li>
+                    <li class="dropdown"> <!-- Modificación: Agregamos la clase "dropdown" -->
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mi Negocio <span class="caret"></span></a>
+                        <ul class="dropdown-menu"> <!-- Modificación: Agregamos la clase "dropdown-menu" -->
+                            <li><a href="mi_negocio.html#mis_gastos">Mis Gastos</a></li>
+                            <li><a href="mi_negocio.html#mis_productos">Mis Productos</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="pricemaker.html#google-map" class="smoothScroll">Contacto</a></li>
+                    <li id="sesionBtn" class="appointment-btn"><a href="#" onclick="cerrarSesion()">Cerrar Sesión</a></li>
+                </ul>
+            </div>
+        </div>
+     </section>
+
+     <!-- HOME -->
+     <section id="negocio" data-stellar-background-ratio="1">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="about-info">
+                        <h2 class="wow fadeInUp" data-wow-delay="0.1s">Mis Gastos</h2>
+                         </div>
+                </div>
+            </div>
+            <p> Aquí podrás llevar un registro detallado de todos tus costos fijos. Desde alquileres y salarios hasta servicios públicos y otros gastos esenciales. 
+                Esto te permitirá considerar tus gastos al calcular los precios de tus productos y asegurarte de que tu negocio sea rentable</p>
+       
+
+            <section id="mis_gastos">
+                <div class="container" style="max-width: 50%; text-align: left;">
+                    <table class="excel-table" id="mis_gastos_table">
+                        <thead>
+                            <tr>
+                                <th>Descripción</th>
+                                <th>Precio $</th>
+                            </tr>
+                        </thead>
+                        <tbody id="mis_gastos_table">
+                            <!-- Filas para cada producto, con celdas editables -->
+                            <tr>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true" id="precio1" oninput="validarNumerosYComas(this)"></td>
+                            </tr>
+                            <!--  agregar más filas como la anterior para más productos -->
+                            <script>
+                                for (let i = 0; i < 9; i++) {
+                                    document.querySelector('#mis_gastos_table').innerHTML += `
+                                    <tr>
+                                        <td contenteditable="true"></td>
+                                        <td contenteditable="true" oninput="validarNumerosYComas(this)"></td>
+                                    </tr>`;
+                                }
+                            </script>
+                        </tbody>
+                    </table>
+
+                    <!-- Contenedor del total -->
+                    <div id="totalContainer">
+                        Mis gastos fijos mensuales son: <span id="total">$0.00</span>
+                    </div>
+                    <button id="agregarFilaGastos" class="excel-button">Agregar Fila</button>
+                    <button id="guardarGastos" class="excel-button" onclick="guardarDatosGastos('mis_gastos_table', 'createProductPrices')" disabled style="background-color: #808080;">Guardar en Mis Gastos</button>
+                </div>
+            </section>
+        </div>
+     </section>
+
+       <!-- Modal de error -->
+  <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="errorModalLabel">Descarga</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p id="errorMessage"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Modal de successful -->
+<div class="modal fade" id="saveSuccesfulModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="saveSuccesfulModal">Guardar</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p id="saveSuccesful"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Agregar el siguiente script para ocultar el modal al cargar la página
+    $(document).ready(function () {
+      $('#errorModal').modal('hide');
+    });
+  </script>
+
+<script>
+    // Agregar el siguiente script para ocultar el modal al cargar la página
+    $(document).ready(function () {
+      $('#saveSuccesfulModal').modal('hide');
+    });
+  </script>
+
+     <!-- Sección de Mis Productos -->
+     <section id="mis_productos">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="about-info">
+                        <h2 class="wow fadeInUp" data-wow-delay="0.1s">Mis Productos</h2>
+                        <p>Aquí puedes ingresar todos tus productos, especificando su código, descripción, cantidad en inventario, costo de compra y margen de ganancia que quieras obtener.
+                             Nuestra plataforma te ayudará a calcular el precio final sugerido de manera rápida y precisa. 
+                            </p>
+                    </div>
+                         <!-- Listas desplegables -->
+                         <div class="excel-dropdown">
+                              <label for="rubro">Rubro:</label>
+                              <select id="rubro" name="rubro">
+                                   <option value="Servicios">Servicios</option>
+                                   <option value="Productos">Productos</option>
+                              </select>
+                         </div>
+
+                         <div class="excel-dropdown">
+                              <label for="fabricacion">Fabricación:</label>
+                              <select id="fabricacion" name="fabricacion">
+                                   <option value="Propia">Propia</option>
+                                   <option value="Revendedor">Revendedor</option>
+                              </select>
+                         </div>
+
+                         <table class="excel-table" id="mis_productos_table">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Producto</th>
+                                        <th>Cantidad</th>
+                                        <th>Valor de Compra $</th>
+                                        <th>Margen de Ganancia %</th>
+                                        <th class="hidden-column">Costo MP + Margen</th>
+                                          <th class="hidden-column">Porcentaje MP</th>
+                                      <th class="hidden-column">Gastos fijos prorrateados</th>
+                                        <th>Precio Final sugerido</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td contenteditable="true"></td>   
+                                    <td contenteditable="true"></td>
+                                    <td contenteditable="true" oninput="validarNumerosYComas(this)"></td>
+                                    <td contenteditable="true" oninput="validarNumerosYComas(this)"></td>
+                                    <td contenteditable="true" oninput="validarNumerosYComas(this)"></td>
+                                    <td class="hidden-column"></td>
+                                    <td class="hidden-column"></td>
+                                    <td class="hidden-column"></td>
+                                    <td contenteditable="false"></td>
+                                </tr>
+                                <!-- Puedes agregar más filas como la anterior para más productos -->
+                                <script>
+                                    for (let i = 0; i < 9; i++) {
+                                        document.querySelector('#mis_productos_table tbody').innerHTML += `
+                                            <tr>
+                                                <td contenteditable="true"></td>
+                                                <td contenteditable="true"></td>
+                                                <td contenteditable="true" oninput="validarNumerosYComas(this)"></td>
+                                                <td contenteditable="true" oninput="validarNumerosYComas(this)"></td>
+                                                <td contenteditable="true" oninput="validarNumerosYComas(this)"></td>
+                                                <td class="hidden-column"></td>
+                                                <td class="hidden-column"></td>
+                                                <td class="hidden-column"></td>
+                                                <td contenteditable="false"></td>                                         
+                                            </tr>`;
+                                    }
+                                </script>
+                            </tbody>
+                            </table>
+                            
+                            <!-- div id="totalCostoMPMargenContainer" style="border: 1px solid #ccc; padding: 10px;">
+                                Total "Costo MP + Margen": <span id="totalCostoMPMargen" style="border: 1px solid #ccc; padding: 5px;">$0.00</span>
+                            </div-->
+                        <button id="agregarFilaProductos" class="excel-button">Agregar Fila</button>
+                        <button id="guardarProductos" class="excel-button" onclick="guardarDatos('mis_productos_table', 'createProductPrices')" disabled style="background-color: #808080;">Guardar</button>
+                        <button id="calcular" class="excel-button" onclick="calcularResultados()" disabled style="background-color: #808080;">Calcular</button>
+                        <button id="descargarExcel" class="excel-button" onclick="descargarExcel()">Descargar Excel</button>
+                    </div>
+                </div>
+          </div>
+     </section>
+
+<!-- SCRIPTS -->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.sticky.js"></script>
+<script src="js/jquery.stellar.min.js"></script>
+<script src="js/wow.min.js"></script>
+<script src="js/smoothscroll.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/custom.js"></script>
+<script>
+    // Función para cerrar sesión
+    function cerrarSesion() {
+        // Eliminar el token del localStorage u realizar otras tareas necesarias para cerrar sesión
+        localStorage.removeItem('token');
+        // Redirigir a la página de inicio de sesión
+        window.location.href = 'iniciosesion.html';
+        }
+
+            const token = localStorage.getItem('token');
+
+        // Verificar si el token no está presente
+        if (!token) {
+            // Redirigir a la página de inicio de sesión
+            window.location.href = 'iniciosesion.html';
+        }
+
+        // Agregar el siguiente script para ocultar el modal al cargar la página
+        $(document).ready(function () {
+        $('#errorModal').modal('hide');
+        });
+
+        $(document).ready(function () {
+        $('#saveSuccesfulModal').modal('hide');
+    });
+
+
+     // Obtener el botón "Guardar" por su ID
+     var guardarProductosBtn = document.getElementById('guardarProductos');
+     var calcularBtn = document.getElementById('calcular');
+
+     var guardarGastosBtn = document.getElementById('guardarGastos');
+
+    // Obtener todas las celdas de la tabla "mis_productos_table"
+    var misProductosTable = document.getElementById('mis_productos_table');
+    var cells = misProductosTable.getElementsByTagName('td');
+
+    // Obtener todas las celdas de la tabla "mis_productos_table"
+    var misGastosTable = document.getElementById('mis_gastos_table');
+    var cellsGastos = misGastosTable.getElementsByTagName('td');
+
+    // Agregar un controlador de eventos para el evento "input" en todas las celdas
+    for (var i = 0; i < cellsGastos.length; i++) {
+        cellsGastos[i].addEventListener('input', function () {
+            // Verificar el contenido de todas las celdas
+            var todasLasCeldasVacias = Array.from(cellsGastos).every(function (celda) {
+                return celda.textContent.trim() === '';
+            });
+
+            // Habilitar o deshabilitar el botón según las condiciones
+            if (todasLasCeldasVacias) {
+                guardarGastosBtn.disabled = true;
+                guardarGastosBtn.style.backgroundColor = '#808080';
+            } else {
+                guardarGastosBtn.disabled = false;
+                guardarGastosBtn.style.backgroundColor = '#4CAF50';
+            }
+        });
+    }
+
+    // Agregar un controlador de eventos para el evento "input" en todas las celdas
+    for (var i = 0; i < cells.length; i++) {
+        cells[i].addEventListener('input', function () {
+            // Verificar el contenido de todas las celdas
+            var todasLasCeldasVacias = Array.from(cells).every(function (celda) {
+                return celda.textContent.trim() === '';
+            });
+
+            // Habilitar o deshabilitar el botón según las condiciones
+            if (todasLasCeldasVacias) {
+                guardarProductosBtn.disabled = true;
+                guardarProductosBtn.style.backgroundColor = '#808080';
+                calcularBtn.disabled = true;
+                calcularBtn.style.backgroundColor = '#808080';
+            } else {
+                guardarProductosBtn.disabled = false;
+                guardarProductosBtn.style.backgroundColor = '#4CAF50';
+                calcularBtn.disabled = false;
+                calcularBtn.style.backgroundColor = '#4CAF50';
+            }
+        });
+    }
+
+    //TABLA MIS GASTOS
+    // JavaScript para agregar fila y actualizar total en Mis Gastos
+    function agregarFilaGastos() {
+        var table = document.querySelector('#mis_gastos_table');
+        var newRow = table.insertRow(table.rows.length);
+        for (var i = 0; i < 2; i++) {
+            var cell = newRow.insertCell(i);
+            cell.setAttribute('contenteditable', 'true');
+            if (i === 1) {
+                cell.setAttribute('oninput', 'validarNumerosYComas(this); actualizarTotal()');
+            }
+        }
+    }
+    
+
+    // Función para validar que solo se ingresen números y comas
+    function validarNumerosYComas(input) {
+        var regex = /^[0-9,]*$/;
+        if (!regex.test(input.textContent)) {
+            input.textContent = input.textContent.replace(/[^0-9,]/g, '');
+        }
+        // Después de validar, actualiza el total
+        actualizarTotal();
+    }
+
+    function actualizarTotal() {
+        var precios = document.querySelectorAll('#mis_gastos_table td:nth-child(2)');
+        var total = 0;
+
+        precios.forEach(function (precio) {
+            var precioValor = parseFloat(precio.textContent.replace(',', '.')) || 0;
+            total += precioValor;
+        });
+        
+        document.getElementById('total').textContent = '$' + total.toFixed(2);
+    }
+
+    // Llamada a la función para calcular y mostrar el total en Mis Gastos
+    document.getElementById('agregarFilaGastos').addEventListener('click', agregarFilaGastos);
+
+    // Llamada a la función para guardar en Mis Gastos
+    document.getElementById('guardarGastos').addEventListener('click', function () {
+
+        // Calcular el total de la columna de precios
+        var total = calcularTotalPrecios();
+
+        // Mostrar el total en el recuadro
+        document.getElementById('total').textContent = '$' + total;
+    });
+
+    //TABLA PRODUCTOS
+    //FUNCIONA OK
+    function agregarFilaProductos() {  
+        var table = document.querySelector('#mis_productos_table tbody');
+        var newRow = table.insertRow(table.rows.length);
+
+        var cells = newRow.insertCell(-1);
+        cells.outerHTML = '<td contenteditable="true"></td>';
+        cells = newRow.insertCell(-1);
+        cells.outerHTML = '<td contenteditable="true"></td>';
+        cells = newRow.insertCell(-1);
+        cells.outerHTML = '<td contenteditable="true" oninput="validarNumerosYComas(this);"></td>';
+        cells = newRow.insertCell(-1);
+        cells.outerHTML = '<td contenteditable="true" oninput="validarNumerosYComas(this);"></td>';
+        cells = newRow.insertCell(-1);
+        cells.outerHTML = '<td contenteditable="true" oninput="validarNumerosYComas(this);"></td>';
+        cells = newRow.insertCell(-1);
+        cells.outerHTML = '<td class="hidden-column"></td>';
+        cells = newRow.insertCell(-1);
+        cells.outerHTML = '<td class="hidden-column"></td>';
+        cells = newRow.insertCell(-1);
+        cells.outerHTML = '<td class="hidden-column"></td>';
+        cells = newRow.insertCell(-1);
+        cells.outerHTML = '<td contenteditable="false"></td>';
+    }
+
+    // Agregar un controlador de eventos para el botón "Agregar Fila"
+    //FUNCIONA OK 
+    document.getElementById('agregarFilaProductos').addEventListener('click', agregarFilaProductos);
+
+    function calcularResultados() {
+        var totalCostoMPMargen = calcularTotalCostoMPMargen();
+
+        // Inicializar gastosFijosProrrateados en 0
+        var gastosFijosProrrateados = 0;
+
+        var filas = document.querySelectorAll('#mis_productos_table tbody tr');
+        
+        filas.forEach(function (fila) {
+            var margenPorcentaje = parseFloat(fila.children[4].textContent.replace(',', '.')) || 0;
+            var valorCompra = parseFloat(fila.children[3].textContent.replace(',', '.')) || 0;
+            var cantidad = parseFloat(fila.children[2].textContent.replace(',', '.')) || 0;
+
+          if (valorCompra > 0 && cantidad > 0 && margenPorcentaje >= 0) {
+                var costoMPMargen = valorCompra * cantidad * (1 + margenPorcentaje / 100);
+
+                // 2. Calcular "Porcentaje MP"
+                var porcentajeMP = costoMPMargen / totalCostoMPMargen;
+                fila.children[6].textContent = (porcentajeMP * 100).toFixed(2) + '%';
+
+                // 3. Calcular "Gastos fijos prorrateados"
+                gastosFijosProrrateados = porcentajeMP * parseFloat(document.getElementById('total').textContent.replace('$', ''));
+                console.log(gastosFijosProrrateados);
+                fila.children[7].textContent = '$' + gastosFijosProrrateados.toFixed(2);
+
+                // 4. Calcular "Precio Final sugerido"
+                var precioFinalSugerido = (gastosFijosProrrateados + costoMPMargen) / cantidad;
+                fila.children[8].textContent = '$' + precioFinalSugerido.toFixed(2);
+          }
+        });
+
+        // Llamada a la función para actualizar el "Total Costo MP + Margen"
+        actualizarTotalCostoMPMargen();
+    }
+
+    // calculo del costo total
+    function calcularTotalCostoMPMargen() {
+        var filas = document.querySelectorAll('#mis_productos_table tbody tr');
+        var totalCostoMPMargen = 0;
+
+        filas.forEach(function (fila) {
+            var margenPorcentaje = parseFloat(fila.children[4].textContent.replace(',', '.')) || 0;
+            var valorCompra = parseFloat(fila.children[3].textContent.replace(',', '.')) || 0;
+            var cantidad = parseFloat(fila.children[2].textContent.replace(',', '.')) || 0;
+
+            var costoMPMargen = valorCompra * cantidad * (1 + margenPorcentaje / 100);
+          totalCostoMPMargen += costoMPMargen;
+        });
+
+        return totalCostoMPMargen.toFixed(2);
+    }
+
+    function actualizarTotalCostoMPMargen() {
+        var filas = document.querySelectorAll('#mis_productos_table tbody tr');
+        var totalCostoMPMargen = 0;
+
+        filas.forEach(function (fila) {
+            var costoMPMargen = parseFloat(fila.children[5].textContent.replace(',', '.')) || 0;
+            totalCostoMPMargen += costoMPMargen;
+        });
+
+        // Actualiza el total al final de la tabla
+        document.getElementById('totalCostoMPMargen').textContent = '$' + totalCostoMPMargen.toFixed(2);
+
+        // Calcular el porcentaje de Materia Prima (MP)
+        var costoMP = parseFloat(document.getElementById('totalCostoMPMargen').textContent.replace('$', ''));
+        var porcentajeMP = (costoMP / totalCostoMPMargen) * 100;
+
+        // Actualizar el porcentaje de Materia Prima (MP)
+        var porcentajeMPContainer = document.getElementById('porcentajeMP');
+        // Verificar si el elemento existe antes de actualizar su contenido
+        if (porcentajeMPContainer) {
+            porcentajeMPContainer.textContent = porcentajeMP.toFixed(2) + '%';
+        } else {
+            console.error("Elemento con ID 'porcentajeMP' no encontrado.");
+        }
+    }
+
+    // Llamada a la función para calcular y mostrar el total de "Costo MP + Margen"
+    actualizarTotalCostoMPMargen();
+    
+        function obtenerDatosDeTabla(tableId) {
+        var table = document.getElementById(tableId);
+        var data = [];
+
+        if (table) {
+            var rows = table.querySelectorAll('tbody tr');
+
+            rows.forEach(function (row) {
+                var rowData = [];
+                var cells = row.querySelectorAll('td');
+
+                cells.forEach(function (cell) {
+                    rowData.push(cell.textContent.trim());
+                });
+
+                data.push(rowData);
+            });
+        }
+
+        return data;
+    }
+
+function guardarDatos() {
+    
+    var filas = document.querySelectorAll('#mis_productos_table tbody tr');
+    console.log(filas);
+    // Crear un array para almacenar los datos de productos
+    const productPrices = [];
+
+    filas.forEach(function (fila) {
+        // Verificar si al menos una celda de la fila tiene contenido
+        if (fila.textContent.trim() !== '') {
+            // Utilizar vírgulas en lugar de punto y coma para separar las declaraciones de variables
+            var id = fila.children[0].textContent.trim();
+            var product = fila.children[1].textContent.trim();
+            var amount = parseFloat(fila.children[2].textContent.replace(',', '.')) || 0;
+            var amountBuy = parseFloat(fila.children[3].textContent.replace(',', '.')) || 0;
+            var marge = parseFloat(fila.children[4].textContent.replace(',', '.')) || 0;
+            var finalPrice = fila.children[8].textContent.trim();
+
+            const productData = {
+                "id": id,
+                "product": product,
+                "amount": amount,
+                "amountBuy": amountBuy,
+                "marge": marge,
+                "finalPrice": finalPrice,
+            };
+
+            productPrices.push(productData);
+        }
+    });
+
+    const token = localStorage.getItem('token');
+    console.log(token);
+
+    // Realizar la solicitud al backend
+
+    fetch('http://localhost:3001/api/createProductPrices', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}` // Asegúrate de tener un token de autenticación si es necesario
+        },
+        body: JSON.stringify(productPrices) // Convertir a formato JSON
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data); // Verificar la respuesta del servidor
+       // saveSuccesfulModal
+        $('#saveSuccesful').text('Documento grabado con éxito.');
+       //falta limpiar tabla 
+       // limpiarTabla('mis_productos_table');
+        //limpiarTabla('mis_gastos_table');
+        $('#saveSuccesfulModal').modal('show');
+        //habilita y deshabilita el botón guardar
+        document.getElementById('guardarProductos').disabled = true;
+        document.getElementById('guardarProductos').style.backgroundColor = '#808080';
+                // Guardar mensaje de éxito en localStorage
+        localStorage.setItem('mensajeExito', JSON.stringify({ message: 'Datos guardados exitosamente' }));
+    })
+    .catch(error => {
+        console.error(error);
+
+        // Guardar mensaje de error en localStorage
+        localStorage.setItem('mensajeError', JSON.stringify({ error: 'Error al guardar datos' }));
+    });
+}
+
+function guardarDatosGastos() {
+    var filas = document.querySelectorAll('#mis_gastos_table tbody tr');
+    console.log(filas);
+
+    // Crear un array para almacenar los datos de productos
+    const gastos = [];
+
+    filas.forEach(function (fila) {
+        // Verificar si al menos una celda de la fila tiene contenido
+        var descriptionCell = fila.querySelector('td:nth-child(1)');
+        var amountCell = fila.querySelector('td:nth-child(2)');
+
+        if (descriptionCell && amountCell && descriptionCell.textContent.trim() !== '') {
+            var description = descriptionCell.textContent.trim();
+            var amount = parseFloat(amountCell.textContent.replace(',', '.')) || 0;
+
+            const gastosData = {
+                "description": description,
+                "amount": amount,
+            };
+
+            gastos.push(gastosData);
+        }
+    });
+
+    const token = localStorage.getItem('token');
+    console.log(token);
+    console.log(JSON.stringify(JSON.stringify(gastos)))
+    // Realizar la solicitud al backend
+
+    fetch('http://localhost:3001/api/saveAmount', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `${token}` // Asegúrate de tener un token de autenticación si es necesario
+        },
+        body: JSON.stringify(gastos) // Convertir a formato JSON
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data); // Verificar la respuesta del servidor
+       // saveSuccesfulModal
+        $('#saveSuccesful').text('Documento grabado con éxito.');
+       //falta limpiar tabla 
+
+        $('#saveSuccesfulModal').modal('show');
+        //habilita y deshabilita el botón guardar
+        document.getElementById('guardarGastos').disabled = true;
+        document.getElementById('guardarGastos').style.backgroundColor = '#808080';
+    })
+    .catch(error => {
+        console.error(error);
+    });
+}
+
+function limpiarTabla(tableId) {
+    var table = document.getElementById(tableId);
+
+    if (table) {
+        var rows = table.querySelectorAll('tbody tr');
+
+        rows.forEach(function (row) {
+            var cells = row.querySelectorAll('td');
+
+            cells.forEach(function (cell) {
+                cell.textContent = '';
+            });
+        });
+    }
+}
+
+function descargarExcel() {
+    const token = localStorage.getItem('token');
+    console.log(token);
+        // Realiza la solicitud al backend
+        fetch('http://localhost:3001/api/generateExcel', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${token}` // Asegúrate de tener un token de autenticación si es necesario
+            }
+        })
+        .then(response => {
+            // Maneja la respuesta según tus necesidades
+            if (response.ok) {
+            $('#errorMessage').text('Documento descargado con exito.');
+            $('#errorModal').modal('show');
+            } else {
+                // Maneja el caso en que la respuesta no es exitosa
+                console.error('Error al descargar Excel');
+            }
+        })
+        .catch(error => {
+            // Maneja los errores de la solicitud
+            console.error(error);
+        });
+
+        
+    }
+
+</script>
+
+
+     </script>
+</body>
+</html>

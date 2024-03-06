@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <title>Price Maker Template</title>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="">
+     <meta name="author" content="Tooplate">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+     <link rel="stylesheet" href="css/font-awesome.min.css">
+     <link rel="stylesheet" href="css/animate.css">
+     <link rel="stylesheet" href="css/owl.carousel.css">
+     <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    
+     <!-- MAIN CSS -->
+     <link rel="stylesheet" href="css/tooplate-style.css">
+     <style>
+        /* Estilo de la tabla con bordes */
+        .excel-table {
+             width: 50%;
+             border-collapse: collapse;
+             margin-bottom: 20px;
+        }
+        .excel-table th, .excel-table td {
+             border: 1px solid #ccc;
+             padding: 10px;
+             text-align: left;
+        }
+        #totalContainer {
+            float: left; /* Hacer que el contenedor flote a la izquierda */
+            margin-top: 20px; /* Ajusta la distancia desde la parte superior */
+            padding: 10px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        #botones {
+            clear: both; /* Limpiar el flotador anterior para asegurar que los botones estén debajo */
+        }
+        /* Estilo del botón "Guardar" */
+        .excel-button {
+            padding: 10px 20px;
+             font-size: 16px;
+             background-color: #4CAF50;
+             color: white;
+             border: none;
+             cursor: pointer;
+             margin-right: 10px;
+        }
+        /* Estilo del botón "Agregar Fila" */
+        #agregarFila {
+             padding: 10px 20px;
+             font-size: 16px;
+             background-color: #4CAF50;
+             color: white;
+             border: none;
+             cursor: pointer;
+        }
+        #agregarFila:hover {
+             background-color: #45a049;
+        }
+
+        /* Estilo de las listas desplegables */
+        .excel-dropdown {
+             display: inline-block;
+             margin-right: 10px;
+        }
+        
+   </style>
+</head>
+<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+
+     <!-- PRE LOADER -->
+     <section class="preloader">
+          <div class="spinner">
+               <span class="spinner-rotate"></span>
+          </div>
+     </section>
+
+     <!-- HEADER -->
+     <header>
+          <div class="container">
+               <div class="row">
+                    <div class="col-md-4 col-sm-5">
+                         <p>Bienvenido a Price Maker</p>
+                    </div>
+                    <div class="col-md-8 col-sm-7 text-align-right">
+                         <span class="phone-icon"><i class="fa fa-phone"></i> 351-2334455</span>
+                         <span class="email-icon"><i class="fa fa-envelope-o"></i> <a href="#">info@pricemaker.com</a></span>
+                    </div>
+               </div>
+          </div>
+     </header>
+    
+     <!-- MENÚ -->
+     <section class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header"></div>
+
+            <!-- MENU LINKS -->
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-left"></ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="pricemaker.html#home" class="smoothScroll">Inicio</a></li>
+                    <li><a href="pricemaker.html#about" class="smoothScroll">Nosotros</a></li>
+                    <li class="dropdown"> <!-- Modificación: Agregamos la clase "dropdown" -->
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mi Negocio <span class="caret"></span></a>
+                        <ul class="dropdown-menu"> <!-- Modificación: Agregamos la clase "dropdown-menu" -->
+                            <li><a href="#mis_productos">Mis Productos</a></li> <!-- Modificación: Enlace ancla para ir a Mis Productos -->
+                            <li><a href="#mis_gastos">Mis Gastos</a></li> <!-- Modificación: Enlace ancla para ir a Mis Gastos -->
+                            <li><a href="calcular_precios.html">Calcular Precio</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="pricemaker.html#google-map" class="smoothScroll">Contacto</a></li>
+                    <li id="sesionBtn" class="appointment-btn"><a href="#" onclick="cerrarSesion()">Cerrar Sesión</a></li>
+                </ul>
+            </div>
+        </div>
+     </section>
+
+     <!-- HOME -->
+     <section id="negocio" data-stellar-background-ratio="1">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="about-info">
+                        <h2 class="wow fadeInUp" data-wow-delay="0.1s">Mis Gastos</h2>
+                    </div>
+                </div>
+            </div>
+
+            <section id="mis_gastos">
+                <div class="container">
+                    <table class="excel-table">
+                        <thead>
+                            <tr>
+                                <th>Descripción</th>
+                                <th>Precio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Filas para cada producto, con celdas editables -->
+                            <tr>
+                                <td contenteditable="true"></td>
+                                <td contenteditable="true"></td>
+                            </tr>
+                            <!-- Puedes agregar más filas como la anterior para más productos -->
+                            <script>
+                                for (let i = 0; i < 9; i++) {
+                                    document.querySelector('.excel-table tbody').innerHTML += `
+                                    <tr>
+                                        <td contenteditable="true"></td>
+                                        <td contenteditable="true" oninput="validarNumerosYComas(this)"></td>
+                                    </tr>`;
+                                }
+                            </script>
+                        </tbody>
+                    </table>
+
+                    <!-- Contenedor del total -->
+                    <div id="totalContainer">
+                        Mis gastos fijos mensuales son: <span id="total">$0.00</span>
+                    </div>
+
+                    <button id="agregarFila" class="excel-button">Agregar Fila</button>
+                    <button id="guardar" class="excel-button">Guardar</button>
+                </div>
+            </section>
+        </div>
+     </section>
+
+     <!-- Mis Productos section -->
+     <section id="mis_productos"> <!-- Modificación: Agregamos la sección para Mis Productos -->
+          <div class="container">
+               <div class="row">
+                    <div class="col-md-12">
+                         <!-- Listas desplegables -->
+                         <div class="excel-dropdown">
+                              <label for="rubro">Rubro:</label>
+                              <select id="rubro" name="rubro">
+                                   <option value="Servicios">Servicios</option>
+                                   <option value="Productos">Productos</option>
+                              </select>
+                         </div>
+
+                         <div class="excel-dropdown">
+                              <label for="fabricacion">Fabricación:</label>
+                              <select id="fabricacion" name="fabricacion">
+                                   <option value="Propia">Propia</option>
+                                   <option value="Revendedor">Revendedor</option>
+                              </select>
+                         </div>
+
+                         <table class="excel-table">
+                              <thead>
+                                   <tr>
+                                        <th>Código</th>
+                                        <th>Tipo</th>
+                                        <th>Descripción</th>
+                                        <th>Valor de Compra</th>
+                                        <th>Margen de Ganancia</th>
+                                   </tr>
+                              </thead>
+                              <tbody>
+                                   <!-- Filas para cada producto, con celdas editables -->
+                                   <tr>
+                                        <td contenteditable="true"></td>
+                                        <td contenteditable="true"></td>
+                                        <td contenteditable="true"></td>
+                                        <td contenteditable="true" oninput="validarNumerosYComas(this)"></td>
+                                        <td contenteditable="true" oninput="validarNumerosYComas(this)"></td>
+                                   </tr>
+                                   <!-- Puedes agregar más filas como la anterior para más productos -->
+                                   <script>
+                                        for (let i = 0; i < 9; i++) {
+                                             document.querySelector('.excel-table tbody').innerHTML += `
+                                             <tr>
+                                                  <td contenteditable="true"></td>
+                                                  <td contenteditable="true"></td>
+                                                  <td contenteditable="true"></td>
+                                                  <td contenteditable="true" oninput="validarNumerosYComas(this)"></td>
+                                                  <td contenteditable="true" oninput="validarNumerosYComas(this)"></td>
+                                             </tr>`;
+                                        }
+                                   </script>
+                              </tbody>
+                         </table>
+                         <button id="agregarFila" class="excel-button">Agregar Fila</button>
+                         <button id="guardar" class="excel-button">Guardar</button>
+                    </div>
+               </div>
+          </div>
+     </section>
+
+     <!-- SCRIPTS -->
+     <script>
+
+     function cerrarSesion() {
+    // Eliminar el token del localStorage u realizar otras tareas necesarias para cerrar sesión
+    localStorage.removeItem('token');
+    // Redirigir a la página de inicio de sesión
+    window.location.href = 'iniciosesion.html';
+    }
+
+        const token = localStorage.getItem('token');
+
+    // Verificar si el token no está presente
+    if (!token) {
+        // Redirigir a la página de inicio de sesión
+        window.location.href = 'iniciosesion.html';
+    }
+
+        // JavaScript para agregar fila y guardar
+        document.getElementById('agregarFila').addEventListener('click', function() {
+             var table = document.querySelector('.excel-table tbody');
+             var newRow = table.insertRow(table.rows.length);
+             for (var i = 0; i < 5; i++) {
+                  var cell = newRow.insertCell(i);
+                  cell.setAttribute('contenteditable', 'true');
+             }
+        });
+
+        // Resto del código de guardado para productos y gastos
+
+        document.getElementById('guardar').addEventListener('click', function() {
+            // Aquí puedes implementar la lógica para guardar los datos
+            // Puedes obtener los datos de las celdas usando DOM y enviarlos a tu servidor
+
+            // Calcular el total de la columna de precios para gastos
+            var totalGastos = calcularTotalPrecios();
+
+            // Calcular el total de la columna de precios para productos
+            var totalProductos = calcularTotalPreciosProductos();
+
+            // Mostrar el total de gastos en el recuadro
+            document.getElementById('total').textContent = '$' + totalGastos;
+
+            // Mostrar el total de productos en el recuadro
+            document.getElementById('totalProductos').textContent = '$' + totalProductos;
+        });
+
+        function calcularTotalPreciosProductos() {
+            var total = 0;
+            var precios = document.querySelectorAll('#mis_productos .excel-table tbody td:nth-child(4)'); // Modificación: Seleccionamos la columna correcta para productos
+            console.log(precios);
+
+            precios.forEach(function(precio) {
+                var precioValor = parseFloat(precio.textContent) || 0;
+                total += precioValor;
+            });
+
+            return total.toFixed(2);
+        }
+
+        // Resto del código para productos y gastos
+   </script>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.sticky.js"></script>
+    <script src="js/jquery.stellar.min.js"></script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/smoothscroll.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/custom.js"></script>
+
+</body>
+</html>
